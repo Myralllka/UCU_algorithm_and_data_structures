@@ -1,17 +1,16 @@
 import random
 
-lst = [1, 2, 3, 5, 6, 7, 8, 9]
+lst = [1, 5, 10, 20, 30, 50, 60, 70, 80, 90]
 el = int(input('> '))
 i = 0
 j = len(lst)
 
 while True:
-
-    median = (i+j)//2
+    median = int(bin(i+j)[2:-1], 2)
     if lst[median] < el:
-        i += (median//2)
+        i += int(bin(median)[2:-1], 2)
     elif lst[median] > el:
-        j //= 2
+        j = int(bin(j)[2:-1], 2)
     else:
         print(el)
         break

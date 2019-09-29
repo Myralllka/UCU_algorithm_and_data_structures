@@ -7,48 +7,48 @@ E = int(sys.argv[1])
 
 
 def selection_sort(lst):
-    sel_c = 0
+    sel_counter = 0
     length = len(lst)
     for i in range(length):
         minn_i = i
         for key in range(i+1, length):
-            sel_c += 1
+            sel_counter += 1
             if lst[minn_i] > lst[key]:
                 minn_i = key
         lst[i], lst[minn_i] = lst[minn_i], lst[i]
-    return lst, sel_c
+    return lst, sel_counter
 
 
 def insertion_sort(lst):
-    ins_c = 0
+    ins_counter = 0
     for i in range(1, len(lst)):
         key = lst[i]
         flag = i - 1
-        ins_c += 1
+        ins_counter += 1
         while flag > -1 and lst[flag] > key:
-            ins_c += 1
+            ins_counter += 1
             lst[flag + 1] = lst[flag]
             flag -= 1
         lst[flag + 1] = key
-    return lst, ins_c
+    return lst, ins_counter
 
 
 def shell_sort(lst):
-    she_c = 0
+    she_counter = 0
     length = len(lst)
     gap = length // 2
     while gap:
         for i in range(gap, length):
             element = lst[i]
             flag = i
-            she_c += 1
+            she_counter += 1
             while flag > gap-1 and lst[flag - gap] > element:
-                she_c += 1
+                she_counter += 1
                 lst[flag] = lst[flag - gap]
                 flag -= gap
             lst[flag] = element
         gap //= 2
-    return lst, she_c
+    return lst, she_counter
 
 
 selection_time_list = []
