@@ -25,6 +25,9 @@ class Point:
         else:
             return 2 ** 18
 
+    def to_lst(self):
+        return [self.x, self.y]
+
     def __str__(self):
         return self.__repr__()
 
@@ -36,19 +39,6 @@ class Point:
 
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
-
-
-def minimal_perimeter(in_lst):
-    a = []
-    i = 0
-    while i <= len(a):
-        a.append(Point(in_lst[i], in_lst[i + 1]))
-        i += 2
-
-    ax = sorted(a, key=lambda x: x.x)
-    ay = sorted(a, key=lambda x: x.y)
-    p1, p2, p3, minimum_value = closest_triple(ax, ay)
-    return "{} {} {}".format(minimum_value, p1, p2)
 
 
 def closest_triple(px, py):
@@ -146,7 +136,7 @@ def check_three_dots(subarr_x):
     return p1, p2, min_value
 
 
-def closest_pair(px, py):
+def find_closest_pair(px, py):
     length = len(px)
     if length <= 3:
         return check_three_dots(px)
@@ -161,8 +151,8 @@ def closest_pair(px, py):
             qy.append(x)
         else:
             ry.append(x)
-    (p1, q1, min_val_1) = closest_pair(qx, qy)
-    (p2, q2, min_val_2) = closest_pair(rx, ry)
+    (p1, q1, min_val_1) = find_closest_pair(qx, qy)
+    (p2, q2, min_val_2) = find_closest_pair(rx, ry)
     if min_val_1 <= min_val_2:
         d = min_val_1
         mn = (p1, q1)
@@ -175,16 +165,30 @@ def closest_pair(px, py):
     return p3, q3, min_val_3
 
 
+def minimal_perimeter(in_lst):
+    a = []
+    i = 0
+    ll = len(in_lst)
+    while i < ll:
+        a.append(Point(in_lst[i][0], in_lst[i][1]))
+        i += 1
+    ax = sorted(a, key=lambda x: x.x)
+    ay = sorted(a, key=lambda x: x.y)
+    p1, p2, p3, minimum_value = closest_triple(ax, ay)
+    return minimum_value, (p1.to_lst(), p2.to_lst(), p3.to_lst())
+
+
 def closest_pair(in_lst):
     a = []
     i = 0
-    while i <= len(a):
-        a.append(Point(in_lst[i], in_lst[i + 1]))
-        i += 2
+    ll = len(in_lst)
+    while i < ll:
+        a.append(Point(in_lst[i][0], in_lst[i][1]))
+        i += 1
     ax = sorted(a, key=lambda x: x.x)
     ay = sorted(a, key=lambda x: x.y)
-    p1, p2, minimum_value = closest_pair(ax, ay)
-    return "{} {} {}".format(minimum_value, p1, p2)
+    p1, p2, minimum_value = find_closest_pair(ax, ay)
+    return minimum_value, (p1.to_lst, p2.to_lst)
 
 
 def input(filename):
@@ -199,5 +203,7 @@ def input(filename):
 
 
 if __name__ == "__main__":
-    print(closest_pair(input('input_100.txt')))
-    print(minimal_perimeter(input('input_100.txt')))
+    # print(closest_pair(input('input_100.txt')))
+    # print(minimal_perimeter(input('input_100.txt')))
+    print(closest_pair([82, 66, 33, 62, 98, 19, 41, 25, 92, 94, 17, 29, 78, 30, 25, 92,19, 82, 42, 31]))
+    print(minimal_perimeter([82, 66, 33, 62, 98, 19, 41, 25, 92, 94, 17, 29, 78, 30, 25, 92,19, 82, 42, 31]))
