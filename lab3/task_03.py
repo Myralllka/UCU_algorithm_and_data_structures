@@ -1,3 +1,4 @@
+import copy
 import math
 
 
@@ -83,3 +84,59 @@ class Median:
             self.inv_heapify(smallest)
 
 
+class PairHeapMin:
+    def __init__(self, value, children=None):
+        if children is None:
+            children = []
+        self.value = value
+        self.children = children
+
+    def __repr__(self):
+        return "val {}: -> arr {}".format(self.value, [i for i in
+                                                       self.children])
+
+    def find_min(self):
+        return self.value
+
+    def merge(self, other):
+        first = copy.copy(self)
+        if not other:
+            pass
+        elif first.value <= other.value:
+            new_list = first.children.copy()
+            new_list.append(other)
+            self.children = new_list
+        else:
+            new_list = other.children.copy()
+            new_list.append(first)
+            self.value = other.value
+            self.children = new_list
+
+        # return PairHeap(self.value, new_list)
+
+    def delete_min(self):
+        return self.merge_pairs(self.children)
+
+    @staticmethod
+    def merge_pairs(l):
+        if len(l) == 1:
+            return l[0]
+        elif len(l) == 2:
+            return l[0].merge(l[1])
+        else:
+            return PairHeapMin.merge(
+                    l[0].merge(l[1]), PairHeapMin.merge_pairs(l[2:]))
+
+    def insert(self, value):
+        return self.merge(PairHeapMin(value))
+
+
+class PairingMedian:
+    def __init__(self):
+        pass
+
+    def add_element(self, value):
+        pass
+
+    def get_median(self):
+        pass
