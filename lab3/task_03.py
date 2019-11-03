@@ -191,7 +191,7 @@ class PairingMedian:
         return "{}".format(self.get_median())
 
     def add_element(self, value):
-        # for empty structure
+        # for is_empty structure
         if self.len_min + self.len_max < 2:
             if not self.heap_max:
                 self.heap_max = PairHeapMax(value)
@@ -203,7 +203,7 @@ class PairingMedian:
             else:
                 self.heap_min = PairHeapMin(value)
                 self.len_min += 1
-        # for NON empty structure
+        # for NON is_empty structure
         elif value < self.heap_max.value:
             self.heap_max.insert(value)
             self.len_max += 1
