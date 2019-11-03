@@ -119,14 +119,13 @@ class ChainedHashTable:
 
     def __init__(self, elements):
         self.elements = elements
-        self.size = 3 * len(elements)
+        self.size = self.the_best_size()
         self.table = [None] * self.size
         self.number_of_collisions = 0
         for each in elements:
             self.insert(each)
 
     def __str__(self):
-        # return str(self.table)
         res = ""
         for each in self.table:
             if each is None:
@@ -135,6 +134,13 @@ class ChainedHashTable:
                 res += " --> {}".format(each)
         return res
 
+    @staticmethod
+    def factor(n):
+        return [i for i in range(1, n // 2 + 1) if n % i == 0]
+
+    def the_best_size(self) -> int:
+        pass
+
     def insert(self, element):
         pass
 
@@ -142,9 +148,6 @@ class ChainedHashTable:
         pass
 
     def search(self, element):
-        pass
-
-    def number_of_collisions(self):
         pass
 
 
@@ -160,14 +163,19 @@ class ChainDiv(ChainedHashTable):
             self.number_of_collisions += 1
         self.table[hash_value].add(element)
 
+    def the_best_size(self) -> int:
+        tmp: int = len(self.elements)//2
+        while tmp >= 3:
+            if len(self.factor(tmp)) == 1:
+                return tmp
+            tmp -= 1
+        return tmp
+
     def delete(self, element):
         super().delete(element)
 
     def search(self, element):
         super().search(element)
-
-    def number_of_collisions(self):
-        pass
 
 
 class ChainMul(ChainedHashTable):
@@ -185,6 +193,8 @@ class ChainMul(ChainedHashTable):
 
 
 if __name__ == "__main__":
-    # new = HashTable(1, [random.randint(1, 100) for i in range(10)])
-    new = HashTable(1, [11, 21, 31, 41, 51, 61, 71, 81, 1, 2])
+    new = HashTable(1, [random.randint(1, 100) for i in range(30)])
+    # new = HashTable(1, [11, 21, 31, 41, 51, 61, 71, 81, 1, 2])
+    # new2 = HashTable(2, [])
     print(new)
+    print(new.get_collision_amount())
