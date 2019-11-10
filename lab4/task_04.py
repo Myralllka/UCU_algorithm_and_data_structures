@@ -180,14 +180,17 @@ class ChainedHashTable:
         return False
 
     def __getitem__(self, item):
+        """
+        :return: the item by it hash value
+        """
         hash_value = self.hash(item)
         return self.current_hash_table[hash_value].value
 
     def contains_twice(self, value):
         """
         check if the element is twice in the array
-        :param value:
-        :return:
+        :param value: value to be checked
+        :return: True if element is twice in the table, False otherwise
         """
         hash_value = self.hash(value)
         if self.current_hash_table[hash_value] is not None and \
@@ -197,14 +200,25 @@ class ChainedHashTable:
 
     def the_best_size(self):
         """
-        abstract method to find the best size for the table
+        the best divisor for this table is the prime number far away from
+        powers of 2
+        :return int: better size for the table
         """
         pass
 
-    def insert(self, each):
+    def insert(self, element):
+        """
+        inserted the element to the hash table
+        :param element: the element to be inserted
+        """
         pass
 
     def hash(self, element):
+        """
+        function to hash the element
+        :param element: element to be hashed
+        :return: the hash value for the table
+        """
         pass
 
     @staticmethod
@@ -225,11 +239,6 @@ class ChainDiv(ChainedHashTable):
         return super().__contains__(item)
 
     def the_best_size(self):
-        """
-        the best divisor for this table is the prime number far away from
-        powers of 2
-        :return int: better size for the table
-        """
         tmp = len(self.list_of_elements) // 2
         while tmp >= 3:
             if len(self.factor(tmp)) == 1:
@@ -238,10 +247,6 @@ class ChainDiv(ChainedHashTable):
         return tmp
 
     def insert(self, element):
-        """
-        inserted the element to the hash table
-        :param element: the element to be inserted
-        """
         hash_value = self.hash(element)
         if self.current_hash_table[hash_value] is None:
             self.current_hash_table[hash_value] = LinkedList()
@@ -278,9 +283,6 @@ class ChainMul(ChainedHashTable):
 
 class OpenAddressHashTable:
     def __init__(self, elements):
-        """
-        :param elements:
-        """
         self.real_size_of_table = len(elements) * 3
         self.number_of_collisions = 0
         self.hash_table = [None] * self.real_size_of_table
@@ -289,7 +291,7 @@ class OpenAddressHashTable:
 
     def __str__(self):
         """
-        :return:
+        :return: string representation of the table
         """
         result = ''
         for element in self.hash_table:
@@ -298,8 +300,8 @@ class OpenAddressHashTable:
 
     def __contains__(self, item):
         """
-        :param item:
-        :return:
+        :param item: item to be checked
+        :return: True if element in the table, False otherwise
         """
         i = 0
         j = self.hash(item, i)
@@ -313,8 +315,8 @@ class OpenAddressHashTable:
 
     def contains_twice(self, item):
         """
-        :param item:
-        :return:
+        :param item: item to be checked
+        :return: True if the table contains the element twice, False otherwise
         """
         i = 0
         flag = False
@@ -340,8 +342,7 @@ class OpenAddressHashTable:
 
     def insert(self, item):
         """
-        :param item:
-        :return:
+        :param item: element to be inserted
         """
         i = 0
         while i < self.real_size_of_table - 1:
@@ -420,3 +421,4 @@ if __name__ == "__main__":
     print(new2)
     print(new2.find_sum(6000000000))
     print(new2.get_collision_amount())
+
