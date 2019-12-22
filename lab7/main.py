@@ -17,15 +17,19 @@ def scenario_A(file_in):
     print(solver.description())
 
     solution = solver.initial_solution()
-    print(solver.initial_solution().print_free())
-    print("-------")
-    print(solver.initial_solution().print_solution())
+    # print(solver.initial_solution().print_free())
+    # print("-------")
+    # print(solver.initial_solution().print_solution())
+    # print("here")
+    # print("\n".join(str(i) for i in solver.initial_solution().slices))
+    # print("here2")
     print("Initial solution score: {}".format(solution.score()))
     if DEBUG:
         solution.print_solution()
 
     optimized_solution = solver.search(solution, time_limit=60)
     print("Optimized solution score: {}".format(optimized_solution.score()))
+    # print("\n".join(str(i) for i in optimized_solution.slices))
     if DEBUG:
         optimized_solution.print_solution()
 
@@ -44,4 +48,4 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args()
 
     DEBUG = options.debug
-    scenario_A("small.in")
+    scenario_A("not_that_big.in")
