@@ -1,4 +1,6 @@
 from init_solver import InitSolverSilly
+from solution import Solution
+
 
 class Solver:
     problem = None
@@ -32,6 +34,7 @@ class Solver:
         :param time_limit: run time limit (in seconds)
         :return: Solution object after optimization, list of the traced solutions' score
         """
+        optimized_solution: Solution
         optimized_solution = solution.duplicate()
         for sl in optimized_solution.get_all_slices():
             if optimized_solution.p.is_valid_slice(sl[0], sl[1], sl[2] + 1, sl[3]):
@@ -42,6 +45,7 @@ class Solver:
                 if optimized_solution.is_free_space(sl[0], sl[1] + sl[3], sl[2], 1):
                     optimized_solution.delete_slice(sl[0], sl[1])
                     optimized_solution.create_new_slice(sl[0], sl[1], sl[2], sl[3] + 1)
+        Solver.trace = [optimized_solution.score()]
         return optimized_solution
 
     def get_search_trace(self):

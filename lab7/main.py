@@ -48,4 +48,4 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args()
 
     DEBUG = options.debug
-    scenario_A("not_that_big.in")
+    scenario_A("medium.in")
